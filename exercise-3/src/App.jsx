@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useState } from 'react';
 
-function App() {
-  /* You will need to use many state to keep the inut values and other needs */
+const App = () => {
+  const [a, setA] = useState('');
+  const [b, setB] = useState('');
+  const [total, setTotal] = useState(null);
+  const [checkType, setCheckType] = useState(true);
 
-  /* You will need some function to handle the key pressed and button events */
+  const onA = (e) => {
+    setA(e.target.value);
+  };
+
+  const onB = (e) => {
+    setB(e.target.value);
+  };
+
+  const handleCompute = () => {
+    const numA = parseFloat(a);
+    const numB = parseFloat(b);
+
+    if (isNaN(numA) || isNaN(numB)) {
+      setCheckType(false);
+    } else {
+      setCheckType(true);
+      setTotal(numA + numB);
+    }
+  };
 
   return (
     <main>
@@ -17,11 +38,14 @@ function App() {
 
       <label>A + B =</label>
 
-      {/* When Compute buton is clicked, this input display the sum of the 2 numbers, or the error message in RED */}
-      <input disabled />
-      <button>Compute</button>
+      <input
+        disabled
+        style={{ color: checkType ? 'white' : 'red' }}
+        value={checkType ? total : 'A and B shall be numbers!'}
+      />
+      <button onClick={handleCompute}>Compute</button>
     </main>
   );
-}
+};
 
 export default App;
